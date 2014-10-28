@@ -1,0 +1,18 @@
+--- OSAtomic-v4.c.original	2014-09-11 11:18:10.000000000 -0700
++++ Libc/arm/sys/OSAtomic-v4.c	2014-09-11 11:18:25.000000000 -0700
+@@ -24,9 +24,6 @@
+ #include <libkern/OSAtomic.h>
+ #include <arm/arch.h>
+ 
+-
+-#if !defined(_ARM_ARCH_6)
+-
+ /*
+  * The only atomic operation ARMv4T provides (atomic swap) is not
+  * sufficient for the general 32-bit arithmetic and compare-and-swap
+@@ -311,5 +308,3 @@
+ 
+     return head;
+ }
+-
+-#endif /* !defined(_ARM_ARCH_6) */

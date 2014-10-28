@@ -1,0 +1,45 @@
+
+#****************************************************************************
+# Copyright (c) 2014 Chukong Technologies Inc.
+#
+# http://www.cocos2d-x.org
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#****************************************************************************
+
+# module name
+MODULE_NAME = libobjc-rt
+
+# includes to add to 
+OBJC_INCLUDES = \
+				-I. \
+				-I$(CWD)/../libdispatch \
+				-I$(CWD)/../blocks-runtime \
+				-I$(CWD)/objc \
+				-I$(CWD)/objc/runtime \
+				-I$(CWD)/objc/runtime/Accessors.subproj \
+				-I$(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.8/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.8/include \
+				-I$(ANDROID_NDK)/platforms/android-18/arch-arm/usr/include \
+				-I$(ANDROID_NDK)/platforms/android-18/arch-arm/usr/include/linux \
+				-I$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.8/include \
+				-I$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.8/include/tr1 \
+				-I$(ANDROID_NDK)/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi/include	\
+				-include config.h			
+				
+SYSROOT = .

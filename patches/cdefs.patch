@@ -1,0 +1,16 @@
+--- Libc/include/sys/cdefs.h	2014-09-05 12:09:41.000000000 -0700
++++ Libc/include/sys/cdefs.h	2014-09-05 12:11:09.000000000 -0700
+@@ -104,7 +104,13 @@
+ #define LIBC_EXTSN_C(sym)	__asm("_" __STRING(sym) LIBC_SUF_EXTSN LIBC_SUF_NON_CANCELABLE)
+ 
+ extern int __pthread_tsd_first;
++#if defined(__cplusplus)
++extern "C" {
++#endif
+ extern int pthread_key_init_np(int, void (*)(void *));
++#if defined(__cplusplus)
++}
++#endif
+ 
+ #define	__LIBC_PTHREAD_KEY(x)		(__pthread_tsd_first + (x))
+ 

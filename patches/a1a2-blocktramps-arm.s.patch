@@ -1,0 +1,65 @@
+--- objc/runtime/a1a2-blocktramps-arm.s	2012-04-29 13:23:50.000000000 -0700
++++ original/a1a2-blocktramps-arm.s	2014-09-22 18:17:02.000000000 -0700
+@@ -5,38 +5,10 @@
+ .syntax unified
+ 
+ .text
+-
+-	.private_extern __a1a2_tramphead
+-	.private_extern __a1a2_firsttramp
+-	.private_extern __a1a2_nexttramp
+-	.private_extern __a1a2_trampend
+-
+-// This must match a2a3-blocktramps-arm.s
+-#if defined(_ARM_ARCH_7)
+-#   define THUMB2 1
+-#else
+-#   define THUMB2 0
+-#endif
+-	
+-#if THUMB2
+-	.thumb
+-	.thumb_func __a1a2_tramphead
+-	.thumb_func __a1a2_firsttramp
+-	.thumb_func __a1a2_nexttramp
+-	.thumb_func __a1a2_trampend
+-#else
+-	// don't use Thumb-1
+-	.arm
+-#endif
+ 	
+ .align 12
+ __a1a2_tramphead_nt:
+ __a1a2_tramphead:
+-	/*
+-	 r0 == self
+-	 r1 == pc of trampoline's first instruction + PC bias
+-	 lr == original return address
+-	 */
+ 
+ 	// calculate the trampoline's index (512 entries, 8 bytes each)
+ #if THUMB2
+@@ -72,14 +44,12 @@
+ 	mov r1, pc
+ 	b __a1a2_tramphead
+ 	.align 3
+-.endmacro
++.endm
+ 
+ .align 3
+-.private_extern __a1a2_firsttramp
+ __a1a2_firsttramp:
+     TrampolineEntry
+ 
+-.private_extern __a1a2_nexttramp
+ __a1a2_nexttramp:
+ TrampolineEntry
+ TrampolineEntry
+@@ -588,7 +558,6 @@
+ TrampolineEntry
+ TrampolineEntry
+ 
+-.private_extern __a1a2_trampend
+ __a1a2_trampend:
+ 
+ #endif

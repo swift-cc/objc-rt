@@ -1,0 +1,20 @@
+--- objc2/runtime/objc-os.h	2014-09-06 10:41:36.000000000 -0700
++++ objc/runtime/objc-os.h	2014-09-06 10:44:43.000000000 -0700
+@@ -220,7 +220,7 @@
+ #define INIT_ONCE_PTR(var, create, delete)                              \
+     do {                                                                \
+         if (var) break;                                                 \
+-        typeof(var) v = create;                                         \
++        auto v = create;                                                \
+         while (!var) {                                                  \
+             if (OSAtomicCompareAndSwapPtrBarrier(0, (void*)v, (void**)&var)){ \
+                 goto done;                                              \
+@@ -233,7 +233,7 @@
+ #define INIT_ONCE_32(var, create, delete)                               \
+     do {                                                                \
+         if (var) break;                                                 \
+-        typeof(var) v = create;                                         \
++        auto v = create;                                                \
+         while (!var) {                                                  \
+             if (OSAtomicCompareAndSwap32Barrier(0, v, (volatile int32_t *)&var)) { \
+                 goto done;                                              \

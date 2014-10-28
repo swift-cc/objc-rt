@@ -1,0 +1,24 @@
+--- thread_setup.original.c	2014-09-16 14:18:47.000000000 -0700
++++ Libc/pthreads/thread_setup.c	2014-09-16 14:20:09.000000000 -0700
+@@ -219,15 +219,15 @@
+ 			  r);
+ 	}
+ 
+-	ts->pc = (uintptr_t)routine;
++	ts->__pc = (uintptr_t)routine;
+ 
+-	if (ts->pc & 1) {
+-	    ts->pc &= ~1;
+-	    ts->cpsr |= 0x20; /* PSR_THUMB */
++	if (ts->__pc & 1) {
++	    ts->__pc &= ~1;
++	    ts->__cpsr |= 0x20; /* PSR_THUMB */
+ 	}
+ 	
+-        ts->sp = (uintptr_t)vsp - C_ARGSAVE_LEN - C_RED_ZONE;
+-	ts->r[0] = (uintptr_t)thread;
++        ts->__sp = (uintptr_t)vsp - C_ARGSAVE_LEN - C_RED_ZONE;
++	ts->__r[0] = (uintptr_t)thread;
+ 
+ 	/* Incase of needresume, suspend is always set */
+ 	if (suspended) {
