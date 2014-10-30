@@ -48,8 +48,8 @@ SOURCES = \
 	objc/runtime/objc-layout.mm \
 	objc/runtime/objc-load.mm \
 	objc/runtime/objc-loadmethod.mm \
-	objc/runtime/objc-lockdebug.mm
-	# objc/runtime/objc-opt.mm \
+	objc/runtime/objc-lockdebug.mm \
+	objc/runtime/objc-opt.mm
 	# objc/runtime/objc-os.mm \
 	# objc/runtime/objc-references.mm \
 	# objc/runtime/objc-rtp.mm \
