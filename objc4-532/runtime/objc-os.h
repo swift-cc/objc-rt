@@ -886,6 +886,56 @@ extern int secure_open(const char *filename, int flags, uid_t euid);
     ANDROID
    =============================================================== */
 
+#include <elf.h>
+
+#ifndef MH_BUNDLE
+#define MH_BUNDLE 1
+#endif
+
+#ifndef MH_EXECUTE
+#define MH_EXECUTE 0
+#endif
+
+#ifndef SEGMENT_CMD
+#define SEGMENT_CMD 0
+#endif
+
+struct dyld_image_info {
+    uintptr_t imageLoadAddress;
+    struct dyld_image_info *next;
+};
+
+typedef struct segment_command {
+    int cmd;
+    int nsects;
+    size_t cmdsize;
+    const char *segname;
+    void *start_address;
+    size_t count;
+} segmentType;
+
+typedef struct section {
+    const char *sectname;
+} sectionType;
+
+typedef struct {
+    int filetype;
+    int ncmds;
+    segmentType segments[10];
+} headerType;
+
+#define CRSetCrashLogMessage(msg) ""
+#define CRGetCrashLogMessage() ""
+#define CRSetCrashLogMessage2(msg) ""
+
+    // getsectiondata() and getsegmentdata() are unavailable
+__BEGIN_DECLS
+#   define getsectiondata(m, s, n, c) objc_getsectiondata(m, #s, n, c)
+#   define getsegmentdata(m, s, c) objc_getsegmentdata(m, #s, c)
+extern uint8_t *objc_getsectiondata(const headerType *eh, const char *segname, const char *sectname, unsigned long *outSize);
+extern uint8_t * objc_getsegmentdata(const headerType *eh, const char *segname, unsigned long *outSize);
+__END_DECLS
+
 #include "pthread.h"
 #include "src/shims/malloc_zone.h"
 

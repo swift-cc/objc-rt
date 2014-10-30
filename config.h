@@ -1,5 +1,6 @@
 #undef TARGET_OS_MAC
 #undef __APPLE__
+#define __ANDROID__
 
 #define __OSX_AVAILABLE_STARTING(...)
 #define __OSX_AVAILABLE_BUT_DEPRECATED(...)
@@ -14,7 +15,6 @@
 #define objc_autoreleaseNoPool objc_autorelease
 
 typedef void* malloc_zone_t;
-typedef void* headerType;
 
 /* Keys 20-25 for libdispactch usage */
 #define __PTK_LIBDISPATCH_KEY0          20
@@ -44,6 +44,12 @@ int backtrace(void*, long)
 
 static inline
 char** backtrace_symbols(void*, long)
+{
+	return 0;
+}
+
+static inline
+char** backtrace_symbols_fd(void*, long, int)
 {
 	return 0;
 }

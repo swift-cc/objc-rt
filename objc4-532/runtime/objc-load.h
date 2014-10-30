@@ -30,9 +30,11 @@
 
 #include <objc/objc-class.h>
 
+#ifndef __ANDROID__
 #include <mach-o/loader.h>
 #include <AvailabilityMacros.h>
-
+#endif
+ 
 /* dynamically loading Mach-O object files that contain Objective-C code */
 
 OBJC_EXPORT long objc_loadModules (

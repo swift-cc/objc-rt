@@ -34,7 +34,10 @@
 
 #include <Block.h>
 #include <Block_private.h>
+
+#ifndef __ANDROID__
 #include <mach/mach.h>
+#endif
 
 // symbols defined in assembly files
 // Don't use the symbols directly; they're thumb-biased on some ARM archs.
@@ -192,8 +195,10 @@ static inline void _assert_locked() {
 static TrampolineBlockPagePair *_allocateTrampolinesAndData(ArgumentMode aMode) {    
     _assert_locked();
 
+#ifndef __ANDROID__
     vm_address_t dataAddress;
-    
+#endif
+
     // make sure certain assumptions are met
     assert(PAGE_SIZE == 4096);
     assert(sizeof(TrampolineBlockPagePair) == 2*PAGE_SIZE);
@@ -213,7 +218,11 @@ static TrampolineBlockPagePair *_allocateTrampolinesAndData(ArgumentMode aMode) 
     }
     
     int i;
+#ifdef __ANDROID__
+    void* dataAddress = malloc(PAGE_SIZE * 2);
+#else
     kern_return_t result = KERN_FAILURE;
+
     for(i = 0; i < 5; i++) {
          result = vm_allocate(mach_task_self(), &dataAddress, PAGE_SIZE * 2, TRUE);
         if (result != KERN_SUCCESS) {
@@ -255,7 +264,8 @@ static TrampolineBlockPagePair *_allocateTrampolinesAndData(ArgumentMode aMode) 
     
     if (result != KERN_SUCCESS)
         return NULL; 
-    
+#endif
+
     TrampolineBlockPagePair *pagePair = (TrampolineBlockPagePair *) dataAddress;
     pagePair->nextAvailable = _paddingSlotCount();
     pagePair->nextPagePair = NULL;

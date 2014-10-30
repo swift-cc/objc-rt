@@ -30,7 +30,10 @@
 #include "objc-private.h"
 #include <stdlib.h>
 #include <setjmp.h>
+
+#ifndef __ANDROID__
 #include <execinfo.h>
+#endif
 
 #include "objc-exception.h"
 
@@ -239,7 +242,10 @@ void _destroyAltHandlerList(struct alt_handler_list *list)
 
 #include "objc-private.h"
 #include <objc/objc-exception.h>
+
+#ifndef __ANDROID__
 #include <execinfo.h>
+#endif
 
 // unwind library types and functions
 // Mostly adapted from Itanium C++ ABI: Exception Handling

@@ -28,6 +28,6 @@
 #define OBJC_RUNTIME_OBJC_EXCEPTION_THROW(...)
 #define OBJC_RUNTIME_OBJC_EXCEPTION_RETHROW(...)
 
-#include "objc-private.original.h"
+#include "objc-private-original.h"
 
 #include "dlfcn.h" // for RTLD_NOLOAD

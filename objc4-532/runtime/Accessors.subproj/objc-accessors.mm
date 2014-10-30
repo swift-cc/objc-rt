@@ -24,8 +24,10 @@
 #include <string.h>
 #include <stddef.h>
 
+#ifndef __ANDROID__
 #include <libkern/OSAtomic.h>
-
+#endif
+ 
 #include "objc-private.h"
 #include "objc-auto.h"
 #include "runtime.h"

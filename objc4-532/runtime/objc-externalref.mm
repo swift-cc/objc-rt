@@ -21,7 +21,7 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#include <malloc/malloc.h>
+#include <malloc.h>
 #include <assert.h>
 #include "runtime.h"
 #include "objc-os.h"
