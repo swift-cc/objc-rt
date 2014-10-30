@@ -33,6 +33,10 @@
 #   include <unordered_map>
 #else
 #   include <tr1/unordered_map>
+#   include <vector>
+#   define __builtin_isnan ___builtin_isnan // throw away this symbol, it conflicts with the clang builtin method
+#   include <algorithm>
+    using namespace std;
     using namespace tr1;
 #endif
 
