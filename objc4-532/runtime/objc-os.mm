@@ -1018,7 +1018,7 @@ const char *CRSetCrashLogMessage2(const char *msg)
 #else
 
 
-#error unknown OS
+//#error unknown OS
 
 
 #endif
