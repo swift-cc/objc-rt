@@ -886,6 +886,36 @@ extern int secure_open(const char *filename, int flags, uid_t euid);
     ANDROID
    =============================================================== */
 
+static inline
+bool OSAtomicCompareAndSwapLong(long oldl, long newl, long volatile *dst) 
+{ 
+    return *dst == newl ? (*dst = oldl), 1 : 0;
+}
+
+static inline
+bool OSAtomicCompareAndSwapPtrBarrier(void *oldp, void *newp, void * volatile *dst) 
+{ 
+    return *dst == newp ? (*dst = oldp), 1 : 0;
+}
+
+static inline
+bool OSAtomicCompareAndSwap32Barrier(int32_t oldl, int32_t newl, int32_t volatile *dst) 
+{ 
+    return *dst == newl ? (*dst = oldl), 1 : 0;
+}
+
+static inline 
+int32_t OSAtomicDecrement32Barrier(volatile int32_t *dst)
+{
+    return --*dst;
+}
+
+static inline 
+int32_t OSAtomicIncrement32Barrier(volatile int32_t *dst)
+{
+    return ++*dst;
+}
+
 #include <elf.h>
 
 #ifndef MH_BUNDLE

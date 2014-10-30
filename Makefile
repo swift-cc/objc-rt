@@ -43,12 +43,12 @@ SOURCES = \
 	objc/runtime/objc-block-trampolines.mm \
 	objc/runtime/objc-exception.mm \
 	objc/runtime/objc-externalref.mm \
-	objc/runtime/objc-file.mm
-	# objc/runtime/objc-initialize.mm \
-	# objc/runtime/objc-layout.mm \
-	# objc/runtime/objc-load.mm \
-	# objc/runtime/objc-loadmethod.mm \
-	# objc/runtime/objc-lockdebug.mm \
+	objc/runtime/objc-file.mm \
+	objc/runtime/objc-initialize.mm \
+	objc/runtime/objc-layout.mm \
+	objc/runtime/objc-load.mm \
+	objc/runtime/objc-loadmethod.mm \
+	objc/runtime/objc-lockdebug.mm
 	# objc/runtime/objc-opt.mm \
 	# objc/runtime/objc-os.mm \
 	# objc/runtime/objc-references.mm \

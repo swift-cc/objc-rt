@@ -10,8 +10,8 @@
 #define __PTK_FRAMEWORK_OBJC_KEY5
 #define SUPPORT_RETURN_AUTORELEASE 1
 
-#define OSAtomicCompareAndSwapPtr objc_atomicCompareAndSwapPtr
-#define OSAtomicCompareAndSwapPtrBarrier objc_atomicCompareAndSwapPtrBarrier
+//#define OSAtomicCompareAndSwapPtr objc_atomicCompareAndSwapPtr
+//#define OSAtomicCompareAndSwapPtrBarrier objc_atomicCompareAndSwapPtrBarrier
 #define objc_autoreleaseNoPool objc_autorelease
 
 typedef void* malloc_zone_t;

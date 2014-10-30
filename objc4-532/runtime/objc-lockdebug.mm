@@ -27,6 +27,7 @@
 **********************************************************************/
 
 #include "objc-private.h"
+#include "objc-auto.h"
 
 #if !defined(NDEBUG)  &&  !TARGET_OS_WIN32
 
