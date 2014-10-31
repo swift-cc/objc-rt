@@ -74,7 +74,9 @@ void _objc_error(id rcv, const char *fmt, va_list args)
 
 #else
 
+#ifndef __ANDROID__
 #include <vproc_priv.h>
+#endif
 
 OBJC_EXPORT void	(*_error)(id, const char *, va_list);
 
@@ -133,7 +135,7 @@ static bool also_do_stderr(void)
 
     // if it could be a pipe back to launchd, fail
     int64_t val = 0;
-    vproc_swap_integer(NULL, VPROC_GSK_IS_MANAGED, NULL, &val);
+    //vproc_swap_integer(NULL, VPROC_GSK_IS_MANAGED, NULL, &val);
     if (val) return false;
     
     return true;
@@ -304,5 +306,5 @@ void _objc_inform_deprecated(const char *oldf, const char *newf)
             _objc_inform("The function %s is obsolete. Do not use it. Set a breakpoint on _objc_warn_deprecated to find the culprit.", oldf);
         }
     }
-    _objc_warn_deprecated();
+    //_objc_warn_deprecated();
 }

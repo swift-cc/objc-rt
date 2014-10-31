@@ -42,10 +42,6 @@
 #   include <execinfo.h>
 #endif
 
-#ifdef __clang__
-#define __builtin_isnan ___builtin_isnan // throw away this symbol, it conflicts with the clang builtin method
-#endif
-
 #include "llvm-DenseMap.h"
 #include <sys/types.h>
 #include <sys/mman.h>

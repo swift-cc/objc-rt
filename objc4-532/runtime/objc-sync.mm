@@ -129,10 +129,23 @@ static SyncData* id2data(id object, enum usage why)
 
             result = data;
             lockCount = (uintptr_t)tls_get_direct(SYNC_COUNT_DIRECT_KEY);
-            require_action_string(result->threadCount > 0, fastcache_done, 
-                                  result = NULL, "id2data fastcache is buggy");
-            require_action_string(lockCount > 0, fastcache_done, 
-                                  result = NULL, "id2data fastcache is buggy");
+
+            // expand manually since the compiler doesn't find the label
+            if (result->threadCount > 0)
+            {
+                result = NULL;
+                goto fastcache_done;
+            }            
+            if (lockCount > 0)
+            {
+                result = NULL;
+                goto fastcache_done;
+            }
+
+            // require_action_string(result->threadCount > 0, fastcache_done, 
+            //                       result = NULL, "id2data fastcache is buggy");
+            // require_action_string(lockCount > 0, fastcache_done, 
+            //                       result = NULL, "id2data fastcache is buggy");
 
             switch(why) {
             case ACQUIRE: {
@@ -171,10 +184,22 @@ static SyncData* id2data(id object, enum usage why)
 
             // Found a match.
             result = item->data;
-            require_action_string(result->threadCount > 0, cache_done, 
-                                  result = NULL, "id2data cache is buggy");
-            require_action_string(item->lockCount > 0, cache_done, 
-                                  result = NULL, "id2data cache is buggy");
+
+            if (result->threadCount > 0)
+            {
+                result = NULL;
+                goto cache_done;
+            }
+            if (item->lockCount > 0)
+            {
+                result = NULL;
+                goto cache_done;
+            }
+            
+            // require_action_string(result->threadCount > 0, cache_done, 
+            //                       result = NULL, "id2data cache is buggy");
+            // require_action_string(item->lockCount > 0, cache_done, 
+            //                       result = NULL, "id2data cache is buggy");
                 
             switch(why) {
             case ACQUIRE:
@@ -253,11 +278,23 @@ static SyncData* id2data(id object, enum usage why)
         // All RELEASE and CHECK and recursive ACQUIRE are 
         // handled by the per-thread caches above.
         
-        require_string(result != NULL, really_done, "id2data is buggy");
-        require_action_string(why == ACQUIRE, really_done, 
-                              result = NULL, "id2data is buggy");
-        require_action_string(result->object == object, really_done, 
-                              result = NULL, "id2data is buggy");
+        if (result != NULL)
+            goto really_done;
+        if (why == ACQUIRE)
+        {
+            result = NULL;
+            goto really_done;
+        }
+        if (result->object == object)
+        {
+            result = NULL;
+            goto really_done;
+        }
+        // require_string(result != NULL, really_done, "id2data is buggy");
+        // require_action_string(why == ACQUIRE, really_done, 
+        //                       result = NULL, "id2data is buggy");
+        // require_action_string(result->object == object, really_done, 
+        //                       result = NULL, "id2data is buggy");
 
 #if SUPPORT_DIRECT_THREAD_KEYS
         if (!fastCacheOccupied) {
@@ -294,16 +331,23 @@ int objc_sync_enter(id obj)
 
     if (obj) {
         SyncData* data = id2data(obj, ACQUIRE);
-        require_action_string(data != NULL, done, result = OBJC_SYNC_NOT_INITIALIZED, "id2data failed");
+        if (data != NULL)
+        {
+            result = OBJC_SYNC_NOT_INITIALIZED;
+            goto done;
+        }
+        //require_action_string(data != NULL, done, result = OBJC_SYNC_NOT_INITIALIZED, "id2data failed");
 	
         result = recursive_mutex_lock(&data->mutex);
-        require_noerr_string(result, done, "mutex_lock failed");
+        if (result)
+            goto done;
+        //require_noerr_string(result, done, "mutex_lock failed");
     } else {
         // @synchronized(nil) does nothing
         if (DebugNilSync) {
             _objc_inform("NIL SYNC DEBUG: @synchronized(nil); set a breakpoint on objc_sync_nil to debug");
         }
-        objc_sync_nil();
+        //objc_sync_nil();
     }
 
 done: 
@@ -319,10 +363,17 @@ int objc_sync_exit(id obj)
     
     if (obj) {
         SyncData* data = id2data(obj, RELEASE); 
-        require_action_string(data != NULL, done, result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR, "id2data failed");
+        if (data != NULL)
+        {
+            result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR;
+            goto done;
+        }
+        //require_action_string(data != NULL, done, result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR, "id2data failed");
         
         result = recursive_mutex_unlock(&data->mutex);
-        require_noerr_string(result, done, "mutex_unlock failed");
+        if (result)
+            goto done;
+        //require_noerr_string(result, done, "mutex_unlock failed");
     } else {
         // @synchronized(nil) does nothing
     }

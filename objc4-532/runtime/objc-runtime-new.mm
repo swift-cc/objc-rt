@@ -32,7 +32,11 @@
 #include "objc-runtime-new.h"
 #include "objc-file.h"
 #include <objc/message.h>
+#include <algorithm>
+
+#ifndef __ANDROID__
 #include <mach/shared_region.h>
+#endif
 
 #define newcls(cls) ((class_t *)cls)
 #define newmethod(meth) ((method_t *)meth)
@@ -2851,7 +2855,7 @@ void flush_caches(Class cls_gen, BOOL flush_meta)
 * Locking: write-locks runtimeLock
 **********************************************************************/
 const char *
-map_images(enum dyld_image_states state, uint32_t infoCount,
+map_images(int state, uint32_t infoCount,
            const struct dyld_image_info infoList[])
 {
     const char *err;
@@ -2871,7 +2875,7 @@ map_images(enum dyld_image_states state, uint32_t infoCount,
 * Locking: write-locks runtimeLock and loadMethodLock
 **********************************************************************/
 const char *
-load_images(enum dyld_image_states state, uint32_t infoCount,
+load_images(int state, uint32_t infoCount,
             const struct dyld_image_info infoList[])
 {
     BOOL found;

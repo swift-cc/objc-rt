@@ -51,18 +51,19 @@ SOURCES = \
 	objc/runtime/objc-lockdebug.mm \
 	objc/runtime/objc-opt.mm \
 	objc/runtime/objc-os.mm \
-	objc/runtime/objc-references.mm
-	# objc/runtime/objc-rtp.mm \
-	# objc/runtime/objc-runtime-new.mm \
-	# objc/runtime/objc-runtime.mm \
-	# objc/runtime/objc-sel-set.mm \
-	# objc/runtime/objc-sel.mm \
-	# objc/runtime/objc-sync.mm \
-	# objc/runtime/objc-typeencoding.mm \
-	# objc/runtime/objc-weak.mm \
-	# objc/runtime/objc-cache.mm \
-	# objc/runtime/objc-class.mm \
-	# objc/runtime/objc-errors.mm
+	objc/runtime/objc-references.mm \
+	objc/runtime/objc-rtp.mm \
+	objc/runtime/objc-sel-set.mm \
+	objc/runtime/objc-sel.mm \
+	objc/runtime/objc-sync.mm \
+	objc/runtime/objc-typeencoding.mm \
+	objc/runtime/objc-weak.mm \
+	objc/runtime/objc-errors.mm
+
+	#objc/runtime/objc-class.mm
+	#objc/runtime/objc-cache.mm
+    #objc/runtime/objc-runtime.mm
+	#objc/runtime/objc-runtime-new.mm
 
 clean:
 	-rm -rf obj/*

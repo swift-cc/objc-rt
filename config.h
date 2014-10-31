@@ -53,3 +53,7 @@ char** backtrace_symbols_fd(void*, long, int)
 {
 	return 0;
 }
+
+#ifdef __clang__
+#	define __builtin_isnan ___builtin_isnan // throw away this symbol, it conflicts with the clang builtin method
+#endif
